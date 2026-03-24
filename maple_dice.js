@@ -245,31 +245,31 @@ function renderDice(){
 
   const lapRow=document.createElement('div');
   lapRow.style='display:flex;align-items:center;gap:8px;margin-bottom:10px;padding-bottom:10px;border-bottom:1px solid rgba(120,60,255,.2);';
-  lapRow.innerHTML=`<span style="font-family:'Jua',sans-serif;font-size:11px;color:var(--text2);white-space:nowrap;">START 통과</span>`;
+  lapRow.innerHTML=`<span style="font-family:'Jua',sans-serif;font-size:14px;color:var(--text2);white-space:nowrap;">START 통과</span>`;
   const lapBtnWrap=document.createElement('div');lapBtnWrap.style='display:flex;gap:5px;';
   [{val:false,label:'미통과'},{val:true,label:'통과 ✓'}].forEach(({val,label})=>{
     const btn=document.createElement('button');
     const sel=passedStart===val,isPass=val===true;
-    btn.style=`padding:5px 12px;border-radius:5px;border:1px solid ${sel?(isPass?'var(--neon-green)':'rgba(200,160,255,.7)'):(isPass?'rgba(0,200,80,.2)':'rgba(80,40,150,.5)')};background:${sel?(isPass?'rgba(0,180,80,.25)':'rgba(100,60,200,.25)'):'rgba(0,0,0,.3)'};color:${sel?(isPass?'var(--neon-green)':'#fff'):'var(--text3)'};font-family:'Jua',sans-serif;font-size:12px;cursor:pointer;transition:all .13s;box-shadow:${sel&&isPass?'0 0 8px rgba(0,255,100,.35)':sel?'0 0 8px rgba(150,100,255,.4)':''};`;
+    btn.style=`padding:5px 12px;border-radius:5px;border:1px solid ${sel?(isPass?'var(--neon-green)':'rgba(200,160,255,.7)'):(isPass?'rgba(0,200,80,.2)':'rgba(80,40,150,.5)')};background:${sel?(isPass?'rgba(0,180,80,.25)':'rgba(100,60,200,.25)'):'rgba(0,0,0,.3)'};color:${sel?(isPass?'var(--neon-green)':'#fff'):'var(--text3)'};font-family:'Jua',sans-serif;font-size:14px;cursor:pointer;transition:all .13s;box-shadow:${sel&&isPass?'0 0 8px rgba(0,255,100,.35)':sel?'0 0 8px rgba(150,100,255,.4)':''};`;
     btn.textContent=label;
     btn.onclick=()=>{passedStart=val;renderDice();};
     lapBtnWrap.appendChild(btn);
   });
   lapRow.appendChild(lapBtnWrap);
   const lapHint=document.createElement('span');
-  lapHint.style=`font-size:9px;font-family:'Jua',sans-serif;${passedStart?'color:var(--neon-green);':'color:var(--text3);'}`;
+  lapHint.style=`font-size:12px;font-family:'Jua',sans-serif;${passedStart?'color:var(--neon-green);':'color:var(--text3);'}`;
   lapHint.textContent=passedStart?'★ 통과 보너스 적용됨':'★ 보너스 없음';
   lapRow.appendChild(lapHint);
   c.appendChild(lapRow);
 
   const countRow=document.createElement('div');
   countRow.style='display:flex;align-items:center;gap:8px;margin-bottom:10px;padding-bottom:10px;border-bottom:1px solid rgba(120,60,255,.2);';
-  countRow.innerHTML=`<span style="font-family:'Jua',sans-serif;font-size:11px;color:var(--text2);white-space:nowrap;">주사위 개수</span>`;
+  countRow.innerHTML=`<span style="font-family:'Jua',sans-serif;font-size:14px;color:var(--text2);white-space:nowrap;">주사위 개수</span>`;
   const btnWrap=document.createElement('div');btnWrap.style='display:flex;gap:5px;';
   [1,2,3].forEach(n=>{
     const btn=document.createElement('button');
     const sel=diceCount===n;
-    btn.style=`padding:5px 14px;border-radius:5px;border:1px solid ${sel?'var(--neon-cyan)':'rgba(80,40,150,.5)'};background:${sel?'rgba(0,160,220,.25)':'rgba(0,0,0,.3)'};color:${sel?'#fff':'var(--text3)'};font-family:'Jua',sans-serif;font-size:12px;cursor:pointer;transition:all .13s;box-shadow:${sel?'0 0 8px rgba(0,200,255,.4)':''};`;
+    btn.style=`padding:5px 14px;border-radius:5px;border:1px solid ${sel?'var(--neon-cyan)':'rgba(80,40,150,.5)'};background:${sel?'rgba(0,160,220,.25)':'rgba(0,0,0,.3)'};color:${sel?'#fff':'var(--text3)'};font-family:'Jua',sans-serif;font-size:14px;cursor:pointer;transition:all .13s;box-shadow:${sel?'0 0 8px rgba(0,200,255,.4)':''};`;
     btn.textContent=`${n}개`;
     btn.onclick=()=>{diceCount=n;while(chosenDice.length<n)chosenDice.push(1);while(specialDiceEffects.length<n)specialDiceEffects.push(null);renderDice();};
     btnWrap.appendChild(btn);
@@ -300,13 +300,13 @@ function renderDice(){
     const specRow=document.createElement('div');
     specRow.style='display:flex;align-items:center;gap:3px;flex-wrap:wrap;padding:4px 0 6px 0;border-bottom:1px solid rgba(120,60,255,.15);';
     const specLabel=document.createElement('span');
-    specLabel.style='font-size:11px;color:var(--text3);width:44px;flex-shrink:0;font-family:"Jua",sans-serif;';
+    specLabel.style='font-size:13px;color:var(--text3);width:52px;flex-shrink:0;font-family:"Jua",sans-serif;';
     specLabel.textContent='특수효과';
     specRow.appendChild(specLabel);
 
     const noneBtn=document.createElement('button');
     const noneActive=!specialDiceEffects[d];
-    noneBtn.style=`padding:2px 6px;border-radius:4px;border:1px solid ${noneActive?'var(--neon-cyan)':'rgba(80,40,150,.4)'};background:${noneActive?'rgba(0,160,220,.2)':'rgba(0,0,0,.3)'};color:${noneActive?'#fff':'var(--text3)'};font-size:9px;cursor:pointer;font-family:"Jua",sans-serif;transition:all .13s;`;
+    noneBtn.style=`padding:2px 6px;border-radius:4px;border:1px solid ${noneActive?'var(--neon-cyan)':'rgba(80,40,150,.4)'};background:${noneActive?'rgba(0,160,220,.2)':'rgba(0,0,0,.3)'};color:${noneActive?'#fff':'var(--text3)'};font-size:12px;cursor:pointer;font-family:"Jua",sans-serif;transition:all .13s;`;
     noneBtn.textContent='없음';
     noneBtn.onclick=()=>{specialDiceEffects[d]=null;renderDice();};
     specRow.appendChild(noneBtn);
@@ -314,7 +314,7 @@ function renderDice(){
     SPECIAL_EFFECTS.forEach(eff=>{
       const effBtn=document.createElement('button');
       const isActive=specialDiceEffects[d]===eff.id;
-      effBtn.style=`padding:2px 6px;border-radius:4px;border:1px solid ${isActive?eff.color:'rgba(80,40,150,.4)'};background:${isActive?'rgba(80,40,150,.35)':'rgba(0,0,0,.3)'};color:${isActive?eff.color:'var(--text3)'};font-size:9px;cursor:pointer;font-family:"Jua",sans-serif;transition:all .13s;${isActive?`box-shadow:0 0 6px ${eff.color}44;`:''}`;
+      effBtn.style=`padding:2px 6px;border-radius:4px;border:1px solid ${isActive?eff.color:'rgba(80,40,150,.4)'};background:${isActive?'rgba(80,40,150,.35)':'rgba(0,0,0,.3)'};color:${isActive?eff.color:'var(--text3)'};font-size:12px;cursor:pointer;font-family:"Jua",sans-serif;transition:all .13s;${isActive?`box-shadow:0 0 6px ${eff.color}44;`:''}`;
       effBtn.textContent=eff.label;effBtn.title=eff.desc;
       effBtn.onclick=()=>{specialDiceEffects[d]=eff.id;renderDice();};
       specRow.appendChild(effBtn);
@@ -324,7 +324,7 @@ function renderDice(){
       const eff=SPECIAL_EFFECTS.find(e=>e.id===specialDiceEffects[d]);
       const finalSteps=applySpecialToSteps(chosenDice[d],eff.id);
       const tag=document.createElement('span');
-      tag.style=`font-size:9px;color:${eff.color};margin-left:2px;font-family:"Jua",sans-serif;`;
+      tag.style=`font-size:12px;color:${eff.color};margin-left:2px;font-family:"Jua",sans-serif;`;
       tag.textContent=`→ ${finalSteps}칸${eff.id==='fert'?' (코인×2)':''}`;
       specRow.appendChild(tag);
     }
