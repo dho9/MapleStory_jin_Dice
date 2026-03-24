@@ -563,7 +563,7 @@ function displayResults(results){
       </div>
       <div class="rcoin ${r.coins<0?'neg':''}">${r.coins>=0?'+':''}${r.coins.toLocaleString()}</div>`;
     list.appendChild(item);
-  });
+  }); 
   sec.scrollIntoView({behavior:'smooth',block:'start'});
 }
 
