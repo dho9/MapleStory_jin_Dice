@@ -63,13 +63,17 @@ function renderBoard(){
         let inner=`<span class="cn">${idx}</span>`;
         if(idx===1)inner+=`<span class="cstart">START</span>`;
         if(sp){
-          if(sp.type==='mystery')inner+=`<span class="cv myst">?</span>`;
+          if(sp.type==='mystery'){
+            inner+=`<span class="cv myst">?</span>`;
+            if(coinVals[idx])inner+=`<span style="font-size:5px;color:var(--orange);line-height:1">${coinVals[idx]}</span>`;
+          }
           else{const s=sp.moveVal>=0?'+':'';inner+=`<span class="cv ${sp.moveVal>=0?'movepos':'moveneg'}">${s}${sp.moveVal}칸</span>`;}
         }else{inner+=`<span class="cv pos">+${coinVals[idx]}</span>`;}
         if(!corner)inner+=`<span style="font-size:5px;color:var(--text3);line-height:1">${cellArrow(idx)}</span>`;
         if(isCur)inner+=`<span class="piece"><svg width="20" height="24" viewBox="0 0 20 24" xmlns="http://www.w3.org/2000/svg"><defs><radialGradient id="pg" cx="40%" cy="35%"><stop offset="0%" stop-color="#80ffff"/><stop offset="60%" stop-color="#00b8d4"/><stop offset="100%" stop-color="#005f7f"/></radialGradient></defs><ellipse cx="10" cy="22" rx="5" ry="2.2" fill="rgba(0,220,255,0.25)"/><circle cx="10" cy="10" r="9" fill="url(#pg)" stroke="#00e5ff" stroke-width="2"/><circle cx="10" cy="10" r="4.5" fill="white" opacity="0.95"/><circle cx="8" cy="8" r="1.5" fill="white" opacity="0.6"/></svg></span>`;
         div.innerHTML=inner;
         div.onclick=()=>{currentPos=idx;highlightedPath=[];renderBoard();document.getElementById('posDisplay').textContent=`${idx}번 칸${idx===1?' (START)':''}`};
+        div.oncontextmenu=(e)=>{e.preventDefault();openCellEditor(idx,div);};
       }else{
         div.className=(r===5&&c===5)?'bc icenter':'bc inner';
       }
@@ -152,7 +156,8 @@ function renderCepVal(type, idx){
     const v=sp&&sp.type==='move'&&sp.moveVal<0?Math.abs(sp.moveVal):3;
     wrap.innerHTML=`<label class="cep-label">뒤로 이동 칸 수</label><input class="cep-input" id="cepInput" type="number" min="1" max="20" value="${v}">`;
   } else {
-    wrap.innerHTML=`<div style="font-size:11px;color:var(--text3);padding:4px 0">랜덤 효과칸 (? 칸)</div>`;
+    const mystCoins=coinVals[idx]||0;
+    wrap.innerHTML=`<label class="cep-label">? 칸 코인 (확률 지급액)</label><input class="cep-input" id="cepInput" type="number" min="0" step="50" value="${mystCoins}">`;
   }
 }
 
@@ -176,7 +181,7 @@ function saveCellEdit(idx){
     coinVals[idx]=0;
   } else if(activeType==='mystery'){
     specialCells.push({cellNum:idx,type:'mystery',moveVal:0});
-    coinVals[idx]=0;
+    coinVals[idx]=val;
   }
 
   closeEditPopup();
@@ -230,7 +235,7 @@ function renderQuickBoard(){
 
 // 팝업 닫기 (바깥 클릭)
 document.addEventListener('click',e=>{
-  if(editPopup&&!editPopup.contains(e.target)&&!e.target.closest('.qbc'))closeEditPopup();
+  if(editPopup&&!editPopup.contains(e.target)&&!e.target.closest('.qbc')&&!e.target.closest('.bc'))closeEditPopup();
 });
 
 // ── 주사위 렌더 ──────────────────────────────────────────
@@ -453,7 +458,7 @@ function simulate(start,order,effects,alreadyPassedStart){
 
     if(sp){
       if(sp.type==='mystery'){
-        stepCoins=0;finalPos=landed;
+        stepCoins=isFert?(coinVals[landed]||0)*2:(coinVals[landed]||0);finalPos=landed;
       }else{
         if(firedMoveCells.has(landed)){
           stepCoins=isFert?200:100;finalPos=landed;moveBlocked=true;
@@ -563,7 +568,7 @@ function displayResults(results){
       </div>
       <div class="rcoin ${r.coins<0?'neg':''}">${r.coins>=0?'+':''}${r.coins.toLocaleString()}</div>`;
     list.appendChild(item);
-  }); 
+  });
   sec.scrollIntoView({behavior:'smooth',block:'start'});
 }
 
