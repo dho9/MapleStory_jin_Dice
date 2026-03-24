@@ -34,7 +34,7 @@
           <div class="help-step">
             <div class="help-num">3</div>
             <div class="help-text">
-              보드 설정 탭에서 보드판 모양 그대로 칸을 클릭해 코인값을 수정하고, 클릭으로 특수칸을 설정할 수 있습니다.
+              보드판에서 우클릭하면 해당 칸의 코인값·이동칸·?칸 종류를 바로 수정할 수 있습니다.
             </div>
           </div>
           <div class="help-step">
@@ -47,7 +47,7 @@
             <div class="help-num">5</div>
             <div class="help-text" style="font-size: 14px; color: red; font-weight: bold;">
               <strong>
-                보드판 및 발판 효과가 변경될 경우, 우측 탭에서 보상 및 특수칸 수정해야 합니다.
+                보드판 및 발판 효과가 변경될 경우, 해당 보드판 우클릭 -> 보상 및 특수칸 수정해야 합니다.
               </strong>
             </div>
           </div>
@@ -55,12 +55,6 @@
       </div>
       <div class="help-contact">오류 및 건의사항은 <b>승성</b>에게 멘션 부탁드립니다 🙏</div>
     </div>
-  </div>
-
-  <!-- 탭 -->
-  <div class="tabs">
-    <button class="tab active" onclick="switchTab('play')">🎲 플레이</button>
-    <button class="tab" onclick="switchTab('settings')">⚙️ 보드 설정</button>
   </div>
 
   <!-- PLAY TAB -->
@@ -138,50 +132,7 @@
 
     </div>
   </div>
-<!-- SETTINGS TAB -->
-<div id="tab-settings" class="page">
 
-  <div class="settings-layout">
-
-    <!-- 왼쪽: 보드 -->
-    <div class="settings-board-col">
-      <div class="section">
-        <div class="sh">
-          <div class="si">🗺️</div>
-          <div class="st">보드판 직접 입력</div>
-        </div>
-        <div class="notice">
-          보드판 모양 그대로 칸을 클릭해서 수정하세요. 클릭하면 일반칸↔특수칸을 전환할 수 있습니다.
-        </div>
-        <div class="qb-legend">
-          <span class="ql ql-coin">💰 코인칸</span>
-          <span class="ql ql-plus">▶ +이동</span>
-          <span class="ql ql-minus">◀ -이동</span>
-          <span class="ql ql-myst">? 랜덤</span>
-          <span style="font-size:10px;color:var(--text3)">클릭: 값수정 및 종류변경</span>
-        </div>
-        <div class="quick-board" id="quickBoard"></div>
-      </div>
-    </div>
-
-    <!-- 오른쪽: 특수칸 (절대배치) -->
-    <div class="settings-side-col">
-      <div class="section">
-        <div class="sh">
-          <div class="si">✨</div>
-          <div class="st">특수 칸 설정</div>
-        </div>
-        <div class="notice">주마다 바뀌는 이동칸·?칸을 여기서 관리하세요.</div>
-
-        <div class="special-list" id="specialList"></div>
-        <button class="add-btn" onclick="addSpecialCell()">+ 특수 칸 추가</button>
-        <div class="save-notice" id="saveNotice">✓ 저장되었습니다</div>
-      </div>
-    </div>
-
-  </div>
-
-</div>
 
   </div>
   <script src="maple_dice.js"></script>
