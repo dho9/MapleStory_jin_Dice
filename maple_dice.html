@@ -40,23 +40,29 @@
           <div class="help-step">
             <div class="help-num">4</div>
             <div class="help-text">
-              각 주사위 아래 특수 효과 버튼(×2, ×3, 🌿×2, -5, -10, ×(-3))을 선택하면 특수 주사위 효과가 계산에 반영됩니다.
+             우측 보드 편집 버튼 클릭시 보드판 편집모드로 들어가며, 일괄 수정기능을 통해 수정할 수 있습니다.
             </div>
           </div>
           <div class="help-step">
             <div class="help-num">5</div>
             <div class="help-text">
-              ?칸은 코인 확률 지급으로 인해 임의로 설정 후 진행 부탁 드립니다. (ex 100 or 200.. )
+              각 주사위 아래 특수 효과 버튼(×2, ×3, 🌿×2, -5, -10, ×(-3))을 선택하면 특수 주사위 효과가 계산에 반영됩니다.
             </div>
           </div>
           <div class="help-step">
             <div class="help-num">6</div>
             <div class="help-text">
-              START 통과 여부를 선택해주세요. (1바퀴 완주 유무)
+              ?칸은 코인 확률 지급으로 인해 임의로 설정 후 진행 부탁 드립니다. (ex 100 or 200.. )
             </div>
           </div>
           <div class="help-step">
             <div class="help-num">7</div>
+            <div class="help-text">
+              START 통과 여부를 선택해주세요. (1바퀴 완주 유무)
+            </div>
+          </div>
+          <div class="help-step">
+            <div class="help-num">8</div>
             <div class="help-text" style="font-size: 14px; color: red; font-weight: bold;">
               <strong>
                 보드판 및 발판 효과가 변경될 경우, 해당 보드판 우클릭 -> 보상 및 특수칸 수정해야 합니다.
@@ -67,6 +73,72 @@
       </div>
       <div class="help-contact">오류 및 건의사항은 <b>승성</b>에게 멘션 부탁드립니다 🙏</div>
     </div>
+  </div>
+
+  <!-- 편집 모드 버튼 (우측 상단 고정) -->
+  <button id="editModeBtn" class="edit-mode-btn" onclick="toggleEditMode()">
+    <span class="emb-icon">✏️</span>
+    <span class="emb-text">보드 편집</span>
+  </button>
+
+  <!-- 편집 패널 (우측 슬라이드인) -->
+  <div id="editPanel" class="edit-panel">
+    <div class="ep-header">
+      <div class="ep-title-row">
+        <span class="ep-title">✏️ 보드 편집 모드</span>
+        <button class="ep-close-btn" onclick="toggleEditMode()">✕</button>
+      </div>
+      <div class="ep-desc">칸을 클릭해서 선택 → 일괄 또는 개별 수정</div>
+    </div>
+
+    <!-- 선택 현황 -->
+    <div class="ep-section">
+      <div class="ep-section-title">
+        <span>선택된 칸</span>
+        <span class="ep-sel-cnt-badge"><span id="epSelCount">0</span>개 선택됨</span>
+      </div>
+      <div class="ep-sel-actions">
+        <button class="ep-sel-btn" onclick="selectAllCells()">전체 선택</button>
+        <button class="ep-sel-btn ep-sel-btn-clear" onclick="clearSelection()">선택 해제</button>
+      </div>
+      <div id="epSelList" class="ep-sel-list">
+        <div class="ep-hint">편집 모드에서 칸을 클릭하여 선택하세요</div>
+      </div>
+    </div>
+
+    <!-- 일괄 적용 -->
+    <div class="ep-section">
+      <div class="ep-section-title">일괄 적용</div>
+      <div class="ep-type-row" id="epBulkTypes">
+        <button class="ep-type-btn active" data-type="coin" onclick="epSetType(this)">💰 코인</button>
+        <button class="ep-type-btn" data-type="plus" onclick="epSetType(this)">▶ +이동</button>
+        <button class="ep-type-btn" data-type="minus" onclick="epSetType(this)">◀ -이동</button>
+        <button class="ep-type-btn" data-type="mystery" onclick="epSetType(this)">? 랜덤</button>
+      </div>
+      <div class="ep-bulk-presets" id="epPresets">
+        <div class="ep-preset-label">코인 빠른 선택</div>
+        <div class="ep-preset-btns">
+          <button class="ep-preset" onclick="setBulkVal(100)">100</button>
+          <button class="ep-preset" onclick="setBulkVal(200)">200</button>
+          <button class="ep-preset" onclick="setBulkVal(300)">300</button>
+          <button class="ep-preset" onclick="setBulkVal(400)">400</button>
+          <button class="ep-preset" onclick="setBulkVal(500)">500</button>
+          <button class="ep-preset" onclick="setBulkVal(600)">600</button>
+        </div>
+      </div>
+      <div class="ep-input-row">
+        <label class="ep-label">값 직접 입력</label>
+        <input class="ep-input" id="epBulkVal" type="number" min="0" step="50" value="100">
+      </div>
+      <button class="ep-apply-btn" id="epApplyBtn" onclick="applyBulkEdit()">✦ 일괄 적용</button>
+    </div>
+
+    <!-- 개별 수정 (선택한 칸 클릭 시 표시) -->
+    <div class="ep-section" id="epSingleSection" style="display:none">
+      <div class="ep-section-title">개별 칸 수정</div>
+      <div class="ep-hint" style="margin-bottom:6px">선택 목록의 칸 번호를 클릭하세요</div>
+    </div>
+    <div id="epSingleEdit" class="ep-section ep-single-wrap"></div>
   </div>
 
   <!-- PLAY TAB -->
